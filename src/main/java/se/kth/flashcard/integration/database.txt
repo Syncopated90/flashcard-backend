@@ -1,0 +1,8 @@
+ psql -U postgres postgres 
+ pw: postgres
+\l to list databases, \c to connect, \dt to list all tables. End everything with ;
+
+ database script
+
+ insert into users (name, password) values ('asd', 'asd');
+
