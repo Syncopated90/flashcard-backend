@@ -1,28 +1,36 @@
 package se.kth.flashcard.controller;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import se.kth.flashcard.integration.AccountRepository;
 import se.kth.flashcard.integration.DBCaller;
 import se.kth.flashcard.model.Account;
 
+@RestController
 public class Login {
-  final String ORIGIN_URL = "http://localhost:5173";
+  @Autowired
+  private AccountRepository accountRepo;
+  private final String ORIGIN_URL = "http://localhost:5173";
   @CrossOrigin(origins = ORIGIN_URL)
   @PostMapping(value = "/login", produces = "application/json")
   ResponseEntity<String> login(@RequestBody Account userData){
     DBCaller dbc = new DBCaller();
     //dbc.printDatabase();
     System.out.println("received POST login request: " + userData.username);
-    String DBResponse = jsonify(userData.username);
-    System.out.println("DBResponse: " + DBResponse);
-    if(dbc.authenticateUser(userData.username, userData.password)){
+    //System.out.println("DBResponse: " + DBResponse);
+    //boolean userFound = dbc.authenticateUser(userData.username, userData.password);
+    Account user = accountRepo.findByUsernameAndPassword(userData.username, userData.password);
+    if(user != null){
       return new ResponseEntity<>(
-      DBResponse,
+      user.toJson(),
       HttpStatus.OK);
     }
     else{

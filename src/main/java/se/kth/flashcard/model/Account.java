@@ -28,9 +28,9 @@ public class Account {
     return "{\"id\":" + this.id + ",\"Username\": \"" + this.username + "\"}";
   }
   String jsonify(String data){
-    return "{\"Username\": \"" + data + "\"}";
+    return "{\"Data\": \"" + data + "\"}";
   }
   public long getId(){return this.id;}
   public String getUsername(){return this.username;}
-  public String getPAssword(){return this.password;}
+  public String getPassword(){return this.password;}
 }
