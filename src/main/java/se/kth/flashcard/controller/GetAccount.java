@@ -20,9 +20,14 @@ public class GetAccount {
   @Autowired
   private AccountRepository accountRepo;
 
-  @GetMapping("/getuser")
+  @PostMapping(value = "/getUserByID", produces = "application/json")
   @CrossOrigin(origins = ORIGIN_URL)
-  public String getUser(@RequestParam("username") String username){
-    return accountRepo.findByUsername(username).toJson();
+  ResponseEntity<String> getUser(@RequestBody long id){
+    System.out.println(id);
+    Account user = accountRepo.findById(id);
+    return new ResponseEntity<>(
+      user.toJson(),
+      HttpStatus.OK
+    );
   }
 }

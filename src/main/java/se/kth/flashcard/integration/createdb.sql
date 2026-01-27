@@ -6,15 +6,22 @@ CREATE TABLE account(
 
 CREATE TABLE flashcard(
   id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  first_side varchar(100) NOT NULL,
-  second_side varchar(100) NOT NULL
+  account_key int NOT NULL,
+  flashcard1 varchar(100) NOT NULL,
+  flashcard2 varchar(100) NOT NULL,
+  CONSTRAINT account_fk
+    FOREIGN KEY(account_key)
+      REFERENCES account(id)
+        ON DELETE CASCADE
 );
 
+
+Not used:
 CREATE TABLE account_card(
-  account_id int NOT NULL,
+  accountId int NOT NULL,
   flashcard_id int NOT NULL,
   CONSTRAINT account_fk
-    FOREIGN KEY(account_id)
+    FOREIGN KEY(accountId)
       REFERENCES account(id)
         ON DELETE CASCADE,
   CONSTRAINT flashcard_fk
