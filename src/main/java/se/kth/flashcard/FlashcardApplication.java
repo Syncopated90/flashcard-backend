@@ -15,7 +15,7 @@ public class FlashcardApplication {
   @GetMapping("/hello")
   public String hello(@RequestParam(value = "name", defaultValue = "world") String name){
     System.out.println("hello world called");
-    return String.format("hello hello %s!", name);
+    return String.format("hello %s!", name);
   }
   
 }
